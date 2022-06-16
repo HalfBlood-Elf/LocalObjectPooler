@@ -1,0 +1,15 @@
+{
+  "name": "com.ol-popov.local-object-pooler",
+  "version": "1.0.0",
+  "displayName": "Local object pooler",
+  "description": "Small object pooler logic",
+  "keywords": [
+    "object pooler",
+    "pool"
+  ],
+  "author": {
+    "name": "Oleksii Popov",
+    "email": "oleksii.popov.vad@gmail.com"
+  },
+  "type": "library"
+}

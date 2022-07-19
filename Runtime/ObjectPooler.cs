@@ -22,7 +22,7 @@ namespace LocalObjectPooler
 
             CheckForCreatedObjects();
 
-            for (byte i = 0; i < initialPoolCount; i++)
+            for (byte i = 0; i < this.initialPoolCount; i++)
             {
                 InstantiatePrefab();
             }

@@ -28,6 +28,7 @@ namespace LocalObjectPooler
 
         protected override void CheckForCreatedObjects()
         {
+            var listToDestroy = new List<GameObject>();
             for (int i = 0; i < parent.childCount; i++)
             {
                 var child = parent.GetChild(i);
@@ -37,7 +38,11 @@ namespace LocalObjectPooler
                     ReturnToPool(inScene);
                     if (initialPoolCount > 0) initialPoolCount--;
                 }
-                else Object.Destroy(child.gameObject);
+                else listToDestroy.Add(child.gameObject);
+            }
+            for (int i = 0; i < listToDestroy.Count; i++)
+            {
+                Object.Destroy(listToDestroy[i]);
             }
         }
     }

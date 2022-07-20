@@ -11,6 +11,8 @@ namespace LocalObjectPooler
         protected GameObject prefab;
         protected Transform parent;
 
+        public Transform Container => parent;
+
         protected abstract Stack<T> PoolStack { get; set; }
 
         public ObjectPooler(GameObject prefab, Transform parent, uint initialPoolCount = 5)

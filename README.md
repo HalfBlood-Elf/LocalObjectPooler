@@ -2,7 +2,7 @@
 UnityPackage for object pooling
 
 # Installing
-Please reffer to [Package Manager installation instructions](https://docs.unity3d.com/Manual/upm-ui-install.html)
+Please reffer to [Package Manager installation instructions](https://docs.unity3d.com/Manual/upm-ui-giturl.html)
 
 # Sample
 ```c#

@@ -45,4 +45,4 @@ public class ItemContainer: MonoBehaviour
 
 ```
 # Changelog
-View [Changelog](CHANGELOG.MD)
+View [Changelog](CHANGELOG.md)

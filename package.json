@@ -1,8 +1,10 @@
 {
   "name": "com.ol-popov.local-object-pooler",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "displayName": "Local object pooler",
   "description": "Small object pooler logic",
+  "changelogUrl": "https://github.com/HalfBlood-Elf/local-object-pooler/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/HalfBlood-Elf/local-object-pooler/blob/main/LICENSE.md",
   "keywords": [
     "object pooler",
     "pool"

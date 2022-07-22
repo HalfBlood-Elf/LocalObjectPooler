@@ -44,3 +44,5 @@ public class ItemContainer: MonoBehaviour
 }
 
 ```
+# Changelog
+View [Changelog](CHANGELOG.MD)

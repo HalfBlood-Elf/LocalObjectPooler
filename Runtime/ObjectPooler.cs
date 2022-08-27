@@ -26,7 +26,7 @@ namespace LocalObjectPooler
 
             for (byte i = 0; i < this.initialPoolCount; i++)
             {
-                InstantiatePrefab();
+                ReturnToPool(InstantiatePrefab());
             }
         }
 

@@ -7,6 +7,12 @@ Dates are in ISO-8601 standart (trying to be)
 
 ## [Unreleased]
 
+## [1.0.4] - 2022-07-22
+### Added
+- protected constructor to ComponentObjectPooler
+### Changed
+- ObjectPooler initialPoolCount now properly initilizes into stack
+
 ## [1.0.3] - 2022-07-22
 ### Added
 - This CHANGELOG.md file

@@ -7,7 +7,7 @@ Dates are in ISO-8601 standart (trying to be)
 
 ## [Unreleased]
 
-## [1.0.4] - 2022-07-22
+## [1.0.4] - 2022-08-28
 ### Added
 - protected constructor to ComponentObjectPooler
 ### Changed

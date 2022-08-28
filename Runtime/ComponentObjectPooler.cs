@@ -13,6 +13,10 @@ namespace LocalObjectPooler
         {
         }
 
+        public ComponentObjectPooler(Transform parent, uint initialPoolCount = 5) : base(null, parent, initialPoolCount)
+        {
+        }
+
         protected override T InstantiatePrefab()
         {
             var instantiated = Object.Instantiate(prefab, parent).GetComponent<T>();

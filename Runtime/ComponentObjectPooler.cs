@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace LocalObjectPooler
 {
@@ -13,10 +15,6 @@ namespace LocalObjectPooler
         {
         }
 
-        public ComponentObjectPooler(Transform parent, uint initialPoolCount = 5) : base(null, parent, initialPoolCount)
-        {
-        }
-
         protected override T InstantiatePrefab()
         {
             var instantiated = Object.Instantiate(prefab, parent).GetComponent<T>();
@@ -24,9 +22,18 @@ namespace LocalObjectPooler
             return instantiated;
         }
 
+        public override T GetFreeObject(PoolableItemSetupParameters setupParameters = null)
+        {
+            var freeObj = base.GetFreeObject(setupParameters);
+            freeObj.gameObject.SetActive(true);
+            return freeObj;
+        }
+
         public override void ReturnToPool(T obj)
         {
+            if (obj is IReturnableToPool returnableToPool) returnableToPool.OnReturnToPool();
             obj.gameObject.SetActive(false);
+            obj.transform.SetParent(parent);
             PoolStack.Push(obj);
         }
 

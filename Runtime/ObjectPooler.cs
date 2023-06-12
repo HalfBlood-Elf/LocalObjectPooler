@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,16 +33,11 @@ namespace LocalObjectPooler
 
         protected abstract T InstantiatePrefab();
 
-        public virtual T GetFreeObject()
+        public virtual T GetFreeObject(PoolableItemSetupParameters setupParameters = null)
         {
-            if (PoolStack.Count > 0)
-            {
-                return PoolStack.Pop();
-            }
-            else
-            {
-                return InstantiatePrefab();
-            }
+            var freeObj = PoolStack.Count > 0 ? PoolStack.Pop() : InstantiatePrefab();
+            if(freeObj is ISetupable setupable) setupable.Setup(setupParameters);
+            return freeObj;
         }
 
         public abstract void ReturnToPool(T obj);

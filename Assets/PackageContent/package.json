@@ -3,8 +3,8 @@
   "version": "1.0.5",
   "displayName": "Local object pooler",
   "description": "Small object pooler logic",
-  "changelogUrl": "https://github.com/HalfBlood-Elf/local-object-pooler/blob/main/CHANGELOG.md",
-  "licensesUrl": "https://github.com/HalfBlood-Elf/local-object-pooler/blob/main/LICENSE.md",
+  "changelogUrl": "https://github.com/HalfBlood-Elf/local-object-pooler/blob/main/Assets/PackageContent/CHANGELOG.md",
+  "licensesUrl": "https://github.com/HalfBlood-Elf/local-object-pooler/blob/main/Assets/PackageContent/LICENSE.md",
   "keywords": [
     "object pooler",
     "pool"

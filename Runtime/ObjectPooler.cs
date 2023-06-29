@@ -1,31 +1,32 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace LocalObjectPooler
 {
     public abstract class ObjectPooler<T>
     {
-        protected uint initialPoolCount = 5;
-        protected GameObject prefab;
-        protected Transform parent;
+        protected uint InitialPoolCount;
+        protected readonly GameObject Prefab;
+        protected readonly Transform Parent;
 
-        public Transform Container => parent;
+        public Transform Container => Parent;
 
-        protected abstract Stack<T> PoolStack { get; set; }
+        protected abstract Stack<T> PoolStack { get; }
 
         public ObjectPooler(GameObject prefab, Transform parent, uint initialPoolCount = 5)
         {
-            PoolStack = new();
-            this.prefab = prefab;
-            this.parent = parent;
-            this.initialPoolCount = initialPoolCount;
+            Prefab = prefab;
+            Parent = parent;
+            InitialPoolCount = initialPoolCount;
 
-            CheckForCreatedObjects();
+            CheckForCreatedObjects(parent);
 
-            for (byte i = 0; i < this.initialPoolCount; i++)
+            CreateInitialPoolObjects();
+        }
+
+        private void CreateInitialPoolObjects()
+        {
+            for (byte i = 0; i < InitialPoolCount; i++)
             {
                 ReturnToPool(InstantiatePrefab());
             }
@@ -42,6 +43,6 @@ namespace LocalObjectPooler
 
         public abstract void ReturnToPool(T obj);
 
-        protected abstract void CheckForCreatedObjects();
+        public abstract void CheckForCreatedObjects(Transform parentToCheck);
     }
 }

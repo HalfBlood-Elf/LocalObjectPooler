@@ -6,9 +6,7 @@ namespace LocalObjectPooler
 {
     public class GameObjectPooler : ObjectPooler<GameObject>
     {
-        protected Stack<GameObject> objectsStack;
-        protected override Stack<GameObject> PoolStack { get => objectsStack; set => objectsStack = value; }
-
+        protected override Stack<GameObject> PoolStack { get; } = new();
 
         public GameObjectPooler(GameObject prefab, Transform parent, uint initialPoolCount = 5) : base(prefab, parent, initialPoolCount)
         {
@@ -16,7 +14,7 @@ namespace LocalObjectPooler
 
         protected override GameObject InstantiatePrefab()
         {
-            var instantiated = Object.Instantiate(prefab, parent);
+            var instantiated = Object.Instantiate(Prefab, Parent);
             instantiated.SetActive(false);
             return instantiated;
         }
@@ -27,15 +25,12 @@ namespace LocalObjectPooler
             PoolStack.Push(obj);
         }
 
-        protected override void CheckForCreatedObjects()
+        public override void CheckForCreatedObjects(Transform parentToCheck)
         {
-            for (int i = 0; i < parent.childCount; i++)
+            foreach (Transform child in parentToCheck)
             {
-                var child = parent.GetChild(i);
-
                 ReturnToPool(child.gameObject);
-                if (initialPoolCount > 0) initialPoolCount--;
-
+                if (InitialPoolCount > 0) InitialPoolCount--;
             }
         }
     }

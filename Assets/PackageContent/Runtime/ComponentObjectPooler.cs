@@ -8,16 +8,15 @@ namespace LocalObjectPooler
 {
     public class ComponentObjectPooler<T> : ObjectPooler<T> where T : MonoBehaviour
     {
-        protected Stack<T> objectsStack;
-        protected override Stack<T> PoolStack { get => objectsStack; set => objectsStack = value; }
-
+        protected override Stack<T> PoolStack { get; } = new();
+        
         public ComponentObjectPooler(T prefab, Transform parent, uint initialPoolCount = 5) : base(prefab.gameObject, parent, initialPoolCount)
         {
         }
 
         protected override T InstantiatePrefab()
         {
-            var instantiated = Object.Instantiate(prefab, parent).GetComponent<T>();
+            var instantiated = Object.Instantiate(Prefab, Parent).GetComponent<T>();
             instantiated.gameObject.SetActive(false);
             return instantiated;
         }
@@ -33,27 +32,17 @@ namespace LocalObjectPooler
         {
             if (obj is IReturnableToPool returnableToPool) returnableToPool.OnReturnToPool();
             obj.gameObject.SetActive(false);
-            obj.transform.SetParent(parent);
+            obj.transform.SetParent(Parent);
             PoolStack.Push(obj);
         }
 
-        protected override void CheckForCreatedObjects()
+        public override void CheckForCreatedObjects(Transform parentToCheck)
         {
-            var listToDestroy = new List<GameObject>();
-            for (int i = 0; i < parent.childCount; i++)
+            foreach (Transform child in parentToCheck)
             {
-                var child = parent.GetChild(i);
-                var inScene = child.GetComponent<T>();
-                if (inScene)
-                {
-                    ReturnToPool(inScene);
-                    if (initialPoolCount > 0) initialPoolCount--;
-                }
-                else listToDestroy.Add(child.gameObject);
-            }
-            for (int i = 0; i < listToDestroy.Count; i++)
-            {
-                Object.Destroy(listToDestroy[i]);
+                if(!child.TryGetComponent(out T inScene)) Object.Destroy(child.gameObject);
+                ReturnToPool(inScene);
+                if (InitialPoolCount > 0) InitialPoolCount--;
             }
         }
     }

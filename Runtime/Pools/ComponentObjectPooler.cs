@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace LocalObjectPooler
 {
@@ -10,13 +7,18 @@ namespace LocalObjectPooler
     {
         protected override Stack<T> PoolStack { get; } = new();
         
-        public ComponentObjectPooler(T prefab, Transform parent, uint initialPoolCount = 5) : base(prefab.gameObject, parent, initialPoolCount)
+        [System.Obsolete("Please, use constructor with factory instead")]
+        public ComponentObjectPooler(T prefab, Transform parent, uint initialPoolCount = 5) : base(prefab, parent, initialPoolCount)
+        {
+        }
+
+        public ComponentObjectPooler(IFactory<T> factory, uint initialPoolCount = 5) : base(factory, initialPoolCount)
         {
         }
 
         protected override T InstantiatePrefab()
         {
-            var instantiated = Object.Instantiate(Prefab, Parent).GetComponent<T>();
+            var instantiated = base.InstantiatePrefab();
             instantiated.gameObject.SetActive(false);
             return instantiated;
         }
@@ -30,6 +32,7 @@ namespace LocalObjectPooler
 
         public override void ReturnToPool(T obj)
         {
+            if (!obj) return;
             if (obj is IReturnableToPool returnableToPool) returnableToPool.OnReturnToPool();
             obj.gameObject.SetActive(false);
             obj.transform.SetParent(Parent);

@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Dates are in ISO-8601 standart (trying to be) (YYYY-MM-DD)
 
+## [1.0.6] - 2023-07-15
+### Added
+- `IFactory<T>` and it's implementation `Factory<T>`
+  - It implements two different spawn methods for runtime and editor
+### Changed
+- Base `ObjectPooler` now uses `IFactory<T>` to instantiate objects
+
 ## [1.0.5] - 2023-06-12
 ### Added
 - `IReturnableToPool` for `OnReturnToPool()` callback

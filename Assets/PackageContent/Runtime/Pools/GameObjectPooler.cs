@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace LocalObjectPooler
@@ -8,19 +7,25 @@ namespace LocalObjectPooler
     {
         protected override Stack<GameObject> PoolStack { get; } = new();
 
+        [System.Obsolete("Please, use constructor with factory instead")]
         public GameObjectPooler(GameObject prefab, Transform parent, uint initialPoolCount = 5) : base(prefab, parent, initialPoolCount)
+        {
+        }
+        
+        public GameObjectPooler(IFactory<GameObject> factory, uint initialPoolCount = 5) : base(factory, initialPoolCount)
         {
         }
 
         protected override GameObject InstantiatePrefab()
         {
-            var instantiated = Object.Instantiate(Prefab, Parent);
+            var instantiated = base.InstantiatePrefab();
             instantiated.SetActive(false);
             return instantiated;
         }
 
         public override void ReturnToPool(GameObject obj)
         {
+            if (!obj) return;
             obj.SetActive(false);
             PoolStack.Push(obj);
         }

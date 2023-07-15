@@ -11,6 +11,7 @@ namespace LocalObjectPooler
         protected PlaceholderFactory<T> factory;
         protected override Stack<T> PoolStack { get => objectsStack; set => objectsStack = value; }
 
+        [System.Obsolete("Please, use constructor with factory instead")]
         public ZenjectComponentObjectPooler(PlaceholderFactory<T> factory, Transform parent, uint initialPoolCount = 5)
             : base(null, parent, 0)
         {
